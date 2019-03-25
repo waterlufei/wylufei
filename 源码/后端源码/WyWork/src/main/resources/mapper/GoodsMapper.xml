@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waterlufei.WyWork.mapper.GoodsMapper">
+    <insert id="increaseGoods" parameterType="com.waterlufei.WyWork.vo.GoodsInfoRequest" useGeneratedKeys="true" keyProperty="goodsId">
+        insert into goods (title,summary,picture,content,price)
+        values (#{title},#{summary},#{picture},#{content},#{price})
+    </insert>
+
+    <select id="getGoodsInfo" resultType="com.waterlufei.WyWork.vo.GoodsInfoResponse">
+        select
+        id as id,
+        title as title,
+        summary as summary,
+        picture as picture,
+        content as content,
+        price as price,
+        purchase_number as purchaseNumber
+        from goods
+        where status = 0 OR status = 1
+    </select>
+
+    <select id="getNotPurchaseGoodsInfo" resultType="com.waterlufei.WyWork.vo.GoodsInfoResponse">
+        select
+        id as id,
+        title as title,
+        summary as summary,
+        picture as picture,
+        content as content,
+        price as price,
+        purchase_number as purchaseNumber
+        from goods
+        where status = 0
+    </select>
+
+    <update id="deleteGoods" parameterType="com.waterlufei.WyWork.vo.GoodsInfoRequest">
+        update goods
+        set status = 2
+        <if test="goodsId != null">
+            where id = #{goodsId}
+        </if>
+    </update>
+
+    <select id="getGoodsInfoByGoodsId" parameterType="com.waterlufei.WyWork.vo.GoodsInfoRequest"
+            resultType="com.waterlufei.WyWork.vo.GoodsInfoResponse">
+        select
+        id as id,
+        title as title,
+        summary as summary,
+        picture as picture,
+        content as content,
+        price as price,
+        purchase_number as purchaseNumber
+        from goods
+        where id = #{goodsId}
+    </select>
+
+    <update id="setGoodsPurchased" parameterType="com.waterlufei.WyWork.vo.GoodsInfoRequest">
+        update goods
+        set status = 1,purchase_number = purchase_number + #{goodsNum}
+        <if test="goodsId != null">
+            where id = #{goodsId}
+        </if>
+    </update>
+
+    <update id="changeGoodsInfo" parameterType="com.waterlufei.WyWork.vo.GoodsInfoRequest">
+        update goods
+        set
+        title = #{title},
+        summary = #{summary},
+        picture = #{picture},
+        content = #{content},
+        price = #{price}
+        where
+        id = #{goodsId}
+    </update>
+</mapper>

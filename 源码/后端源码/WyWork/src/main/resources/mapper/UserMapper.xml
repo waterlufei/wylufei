@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waterlufei.WyWork.mapper.UserMapper">
+    <select id="selectUser" parameterType="com.waterlufei.WyWork.vo.UserInfoRequest"
+        resultType="com.waterlufei.WyWork.vo.UserInoResponse">
+        select
+        nickname as nickname,
+        username as username
+        from user
+        where username = #{username} AND  pwd = #{password}
+    </select>
+
+</mapper>

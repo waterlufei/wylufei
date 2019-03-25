@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.waterlufei.WyWork.mapper.OrderMapper">
+    <select id="getOrdersInfo" resultType="com.waterlufei.WyWork.vo.OrderResponse">
+       select
+       id as id,
+       goods_id as goodsId,
+       title as title,
+       summary as summary,
+       picture as picture,
+       content as content,
+       price as price,
+       status as status,
+       goods_num as goodsNum,
+       create_time as createTime
+       from goods_order
+       where status = 0
+    </select>
+
+    <insert id="addOrder" parameterType="com.waterlufei.WyWork.vo.OrderRequest">
+        insert into
+        goods_order(goods_id,title,summary,picture,content,price,goods_num)
+        values (#{goodsId},#{title},#{summary},#{picture},#{content},#{price},#{goodsNum})
+    </insert>
+
+    <select id="getOrdersInfoById" parameterType="com.waterlufei.WyWork.vo.OrderRequest" resultType="com.waterlufei.WyWork.vo.OrderResponse">
+       select
+       id as id,
+       goods_id as goodsId,
+       title as title,
+       summary as summary,
+       picture as picture,
+       content as content,
+       price as price,
+       status as status,
+       goods_num as goodsNum,
+       create_time as createTime
+       from goods_order
+       where status = 0 AND goods_id = #{goodsId}
+    </select>
+
+</mapper>
